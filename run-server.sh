@@ -1,8 +1,10 @@
 #! /bin/bash
 
-source ./library.sh
+path=~/init-ubuntu-for-docker
 
-iniFile='./server.ini'
+source ${path}/library.sh
+iniFile="${path}/server.ini"
+
 debug=${1}
 lang=${2-cn}
 
@@ -68,7 +70,7 @@ function command()
             then
                 if [ "${result}" != "0" -a -z "${default}" ]
                 then
-                    color 31 "The param \`$var\` for index $index required." "" "\a"
+                    color 31 "The param \`$var\` for index $index required." "\n" "\n\a"
                     exit 1
                 fi
                 param=$default
@@ -95,6 +97,11 @@ then
     for num in ${number[*]}
     do
         cmd=`command $num`
+        if [ "$?" != "0" ]
+        then
+            echo "$command"
+            exit 1
+        fi
 
         if [ "${mode}" == "sync" ]
         then
@@ -109,6 +116,11 @@ then
     command=${command:`expr ${#operation} + 2`}
 else
     command=`command ${number[0]}`
+    if [ "$?" != "0" ]
+    then
+        echo "$command"
+        exit 1
+    fi
 fi
 
 if [ -n "${debug}" -a "${debug}" == "debug" ]
