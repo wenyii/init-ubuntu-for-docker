@@ -1,5 +1,6 @@
 #! /bin/bash
 
+pwd=`pwd`
 cd /tmp
 
 sudo apt-get install openssh-server
@@ -17,4 +18,5 @@ sudo chmod a+x /usr/bin/docker-compose
 
 sudo apt-get install aufs-tools
 
-sudo ln -s `pwd`/run-server.sh /usr/bin/run-server
+sudo rm -rf /usr/bin/run-server
+sudo ln -s ${pwd}/run-server.sh /usr/bin/run-server
