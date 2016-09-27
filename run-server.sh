@@ -2,12 +2,15 @@
 
 path=~/init-ubuntu-for-docker
 
+# source library and config
 source ${path}/library.sh
 iniFile="${path}/server.ini"
 
+# parse params
 debug=${1}
 lang=${2-cn}
 
+# change IFS
 myIFS=';'
 items=`keys ${iniFile} name.${lang} ${myIFS}`
 _items=(`items ${iniFile}`)
@@ -15,12 +18,14 @@ _items=(`items ${iniFile}`)
 standardIFS=$IFS
 IFS=$myIFS
 
+# show menu
 items=($items)
 menu "${items[*]}" "All of the server." "no" "" "yes"
 
 IFS=$standardIFS
 number=`inputint "Select server index" ${#items[*]} "" "yes"`
 
+# show error when print menu
 if [ "$?" != 0 ]
 then
     echo -e "$number"
@@ -38,18 +43,21 @@ function command()
     item=${_items[`expr $index - 1`]}
     _cmd=`ini ${iniFile} ${item} cmd`
 
+    # use nohup
     nohup=`ini ${iniFile} ${item} nohup`
     if [ "${nohup}" == "true" ]
     then
         _cmd="nohup $_cmd > /dev/null 2>&1"
     fi
 
+    # fork process
     fork=`ini ${iniFile} ${item} fork`
     if [ "${fork}" == "true" ]
     then
         _cmd="$_cmd &"
     fi
 
+    # need input
     input=`ini ${iniFile} ${item} input`
     if [ -n "${input}" ]
     then
@@ -85,6 +93,7 @@ function command()
     fi
 }
 
+# multiple command
 if [ ${#number[*]} -gt 1 ]
 then
     read -p "You want execution by sync/async ? [async] : " mode
@@ -103,6 +112,7 @@ then
             exit 1
         fi
 
+        # exec mode
         if [ "${mode}" == "sync" ]
         then
             operation="&&"
@@ -115,6 +125,7 @@ then
 
     command=${command:`expr ${#operation} + 2`}
 else
+    # only a command
     command=`command ${number[0]}`
     if [ "$?" != "0" ]
     then
@@ -123,6 +134,7 @@ else
     fi
 fi
 
+# print the command when debug
 if [ -n "${debug}" -a "${debug}" == "debug" ]
 then
     color 30 "$command" "\n" "\n"
@@ -130,3 +142,5 @@ else
     eval $command
     color 32 "Command execution completed." "\n" "\n"
 fi
+
+# -- eof --
