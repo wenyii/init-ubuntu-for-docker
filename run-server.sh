@@ -16,7 +16,7 @@ standardIFS=$IFS
 IFS=$myIFS
 
 items=($items)
-menu "${items[*]}" "All of the server." "yes" "" "yes"
+menu "${items[*]}" "All of the server." "no" "" "yes"
 
 IFS=$standardIFS
 number=`inputint "Select server index" ${#items[*]} "" "yes"`

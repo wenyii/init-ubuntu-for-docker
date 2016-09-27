@@ -8,5 +8,8 @@ Init system ubuntu for docker
 * ./init-ubuntu-16.04.sh
 * run-server
 
+## Command example
+![image](https://raw.githubusercontent.com/jtleon/init-ubuntu-for-docker/master/example.png "命令样例")
+
 ## Email
 * jiangxilee@gmail.com
