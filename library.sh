@@ -69,7 +69,7 @@ function ini()
     file=$1
     item=$2
     key=$3
-    var=`sed -n "/\[$item\]/,/\[.*\]/p" $file | grep -v "\[.*\]" | grep "^$key[ ]*="`
+    var=`sed -n "/\[$item\]/,/\[.*\]/p" $file | grep -v "\[$item\]" | grep "^$key[ ]*="`
 
     if [ -z "$var" ]
     then
