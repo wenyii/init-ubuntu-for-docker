@@ -20,3 +20,10 @@ sudo apt-get install aufs-tools
 
 sudo rm -rf /usr/bin/run-server
 sudo ln -s ${pwd}/run-server.sh /usr/bin/run-server
+
+version=`cat /etc/issue | grep "14.04"`
+if [ -n "${version}" ]
+then
+    sudo chmod a+x ./patch-ubuntu-14.04.sh
+    source ./patch-ubuntu-14.04.sh
+fi
