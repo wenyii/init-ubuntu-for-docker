@@ -17,5 +17,4 @@ sudo chmod a+x /usr/bin/docker-compose
 
 sudo apt-get install aufs-tools
 
-ln -s ./run-server.sh /usr/bin/run-server
-sudo chmod a+x /usr/bin/run-server
+sudo ln -s `pwd`/run-server.sh /usr/bin/run-server
