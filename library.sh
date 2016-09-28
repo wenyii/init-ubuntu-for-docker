@@ -148,9 +148,18 @@ function menu()
         else
             _i=$i
         fi
-        color 32 "  [${_i}]" '' '\c'
-        echo -n " --- "
-        color 34 "${_item}"
+        
+        blank=`echo ${_item} | grep "<blank>"`
+        if [ -n "$blank" ]
+        then
+            title=`echo ${blank} | sed "s/\<blank\>[ ]*//"`
+            color 30 "  [$title]" "\n" "\n  -----------------"
+        else
+            color 32 "  [${_i}]" '' '\c'
+            echo -n " --- "
+            color 34 "${_item}"
+        fi
+        
         ((i++))
     done
     
