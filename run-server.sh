@@ -1,10 +1,10 @@
 #! /bin/bash
 
-path=.
+name="init-ubuntu-for-docker"
 
 # source library and config
-source ${path}/library.sh
-iniFile="${path}/server.ini"
+source /usr/local/lib/${name}-library.sh
+iniFile="/etc/${name}/server.ini"
 
 # parse params
 debug=${1}
