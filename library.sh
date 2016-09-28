@@ -149,11 +149,16 @@ function menu()
             _i=$i
         fi
         
-        blank=`echo ${_item} | grep "<blank>"`
+        blank=`echo ${_item} | grep "\-blank\-"`
         if [ -n "$blank" ]
         then
-            title=`echo ${blank} | sed "s/\<blank\>[ ]*//"`
-            color 30 "  [$title]" "\n" "\n  -----------------"
+            title=`echo ${blank} | sed "s/\-blank\-[ ]*//"`
+            if [ -n "$title" ]
+            then
+                color 30 "  [$title]" "\n" "\n  -----------------"
+            else
+                echo
+            fi
         else
             color 32 "  [${_i}]" '' '\c'
             echo -n " --- "

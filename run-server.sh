@@ -1,6 +1,5 @@
 #! /bin/bash
 
-#path=~/init-ubuntu-for-docker
 path=.
 
 # source library and config
