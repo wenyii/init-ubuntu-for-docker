@@ -9,12 +9,12 @@ version=`sudo lsb_release -a | grep "Release" | awk -F " " '{print $2}'`
 if [ "`inarray 12.04 14.04 15.10 16.04 $version`" == "no" ]
 then
     color 31 "Version $version is not recommend beyond them 12.04/14.04/15.01/16.04" "\n" "\n\a"
-    source ./others-system.sh
+    source ./others-version.sh
     exit 1
 fi
 
-# Begin install
-if [ ! -f /usr/bin/docker -a ! -f /usr/bin/docker-compose ]
+# Begin install docker
+if [ ! -f /usr/bin/docker ]
 then
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates
@@ -57,6 +57,14 @@ then
         sleep 20
         sudo reboot
     fi
+fi
+
+# Begin install docker-compose
+if [ ! -f /usr/bin/docker-compose ]
+then
+    wget -c http://drycms.hk.ufileos.com/docker-compose-1.8.0 -O docker-compose
+    sudo mv docker-compose /usr/bin
+    sudo chmod a+x /usr/bin/docker-compose
 fi
 
 name="init-ubuntu-for-docker"
