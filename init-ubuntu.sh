@@ -1,11 +1,22 @@
 #! /bin/bash
 
-source ./library.sh
+name="init-ubuntu-for-docker"
 
+# Preparatory work
+direcotryName=`echo $PWD | awk -F "/" '{print $NF}'`
+if [ "${direcotryName}" != $name ]
+then
+    echo -e "\n\033[1;31mPlease enter project ${name} first.\033[0;0m\n\a"
+    exit 1
+fi
+
+sudo kill -2 `pgrep docker`
 sudo apt-get install -y lsb-core
 
 # Get version of operation system
 version=`sudo lsb_release -a | grep "Release" | awk -F " " '{print $2}'`
+
+source ./library.sh
 
 # Check system version
 if [ "`inarray 12.04 14.04 15.10 16.04 $version`" == "no" ]
@@ -29,7 +40,7 @@ then
 
     sudo apt-get install -y aufs-tools
 
-    exit 1
+    exit 2
 fi
 
 # Begin install docker-compose
@@ -48,8 +59,6 @@ function configure()
 # Post processed
 function processed()
 {
-    name="init-ubuntu-for-docker"
-
     # Move config
     if [ ! -d /etc/${name} ]
     then
