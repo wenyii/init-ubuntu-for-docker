@@ -25,9 +25,6 @@ then
     
     cd /tmp
 
-    sudo apt-get install -y openssh-server
-    sudo apt-get install -y git
-
     wget -c http://drycms.hk.ufileos.com/docker-1.11.2.tgz -O docker.tgz
     mkdir docker && tar -zxvf docker.tgz -C ./docker --strip-components 1
     sudo mv docker/* /usr/bin
