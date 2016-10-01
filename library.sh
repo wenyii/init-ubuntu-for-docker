@@ -171,15 +171,15 @@ function menu()
     echo
     if [ "$printOnly" == "yes" ]
     then
-    	return
+        return
     fi
     
     max=`expr ${i} - 1`
     number=`inputint "Please select a index" ${max} ${default}`
     if [ "$?" != 0 ]
     then
-    	echo -e "$number"
-    	exit
+        echo -e "$number"
+        exit
     fi
     
     return `expr $number - 1`
@@ -197,15 +197,15 @@ function menu()
 ###
 function inputint()
 {
-	title=${1}
-	max=${2}
-	default=${3}
-	checkbox=${4-"no"}
-	
-	# 提示输入数字进行选择
+    title=${1}
+    max=${2}
+    default=${3}
+    checkbox=${4-"no"}
+    
+    # 提示输入数字进行选择
     if [ "$checkbox" == "yes" ]
     then
-    	title="${title}, allows multiple by space"
+        title="${title}, allows multiple by space"
     fi
     
     declare -a number
@@ -214,36 +214,36 @@ function inputint()
     
     if [ "$checkbox" != "yes" -a ${#number[*]} -gt 1 ]
     then
-    	color 31 "not allows multiple selection." '\n' '\n\a'
-	    exit 2
+        color 31 "not allows multiple selection." '\n' '\n\a'
+        exit 2
     fi
     
-	if [ ${#number[*]} -eq 0 -a -n "$default" ]
+    if [ ${#number[*]} -eq 0 -a -n "$default" ]
     then
         number=$default
     fi
     
     if [ ${#number[*]} -eq 0 ]
     then
-    	color 31 "The index is illegal, must be number than in 1 to $max." '\n' '\n\a'
-	    exit 2
+        color 31 "The index is illegal, must be number than in 1 to $max." '\n' '\n\a'
+        exit 2
     fi
     
     # 验证输入
     for j in ${number[*]}
     do
-    	expr $j "+" 1 &> /dev/null
-    	if [ ! $? -eq 0 ]
-    	then
-    		color 31 "The index $j is illegal, must be number." '\n' '\n\a'
-	        exit 2
-    	fi
-    	
-	    if [ ${j} -lt 1 -o ${j} -gt ${max} ]
-	    then
-	        color 31 "The index $j is illegal, must in 1 to $max." '\n' '\n\a'
-	        exit 2
-	    fi
+        expr $j "+" 1 &> /dev/null
+        if [ ! $? -eq 0 ]
+        then
+            color 31 "The index $j is illegal, must be number." '\n' '\n\a'
+            exit 2
+        fi
+        
+        if [ ${j} -lt 1 -o ${j} -gt ${max} ]
+        then
+            color 31 "The index $j is illegal, must in 1 to $max." '\n' '\n\a'
+            exit 2
+        fi
     done
     
     echo ${number[*]}
