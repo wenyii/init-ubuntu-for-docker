@@ -74,33 +74,37 @@ function processed()
 
 # Begin install docker
 echo -e "\n\033[1;34m ---------- update apt-get source ----------\033[0;0m\n"
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-case $version in
+if [ -f /etc/apt/sources.list.d/docker.list ]
+then
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https ca-certificates
+    sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-    '12.04')
-        deb="deb https://apt.dockerproject.org/repo ubuntu-precise main"
-        ;;
-    '14.04')
-        deb='deb https://apt.dockerproject.org/repo ubuntu-trusty main'
-        ;;
-    '15.10')
-        deb='deb https://apt.dockerproject.org/repo ubuntu-wily main'
-        ;;
-    '16.04')
-        deb='deb https://apt.dockerproject.org/repo ubuntu-xenial main'
-        ;;
-esac
+    case $version in
 
-sudo touch /etc/apt/sources.list.d/docker.list
-sudo chmod 777 /etc/apt/sources.list.d/docker.list
-sudo echo $deb > /etc/apt/sources.list.d/docker.list
+        '12.04')
+            deb="deb https://apt.dockerproject.org/repo ubuntu-precise main"
+            ;;
+        '14.04')
+            deb='deb https://apt.dockerproject.org/repo ubuntu-trusty main'
+            ;;
+        '15.10')
+            deb='deb https://apt.dockerproject.org/repo ubuntu-wily main'
+            ;;
+        '16.04')
+            deb='deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+            ;;
+    esac
 
-sudo apt-get update
-sudo apt-get purge lxc-docker
-sudo apt-cache policy docker-engine
+    sudo touch /etc/apt/sources.list.d/docker.list
+    sudo chmod 777 /etc/apt/sources.list.d/docker.list
+    sudo echo $deb > /etc/apt/sources.list.d/docker.list
+
+    sudo apt-get update
+    sudo apt-get purge lxc-docker
+    sudo apt-cache policy docker-engine
+fi
 
 if [ "`inarray 14.04 15.10 16.04 $version`" == "yes" ]
 then
