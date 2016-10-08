@@ -46,7 +46,7 @@ set shiftwidth=4
 EOF
 
 # Composer for docker
-if [ `sudo docker images -a | grep composer | wc -l` == 0 ]
+if [ `sudo docker images -a | grep 'composer/composer' | wc -l` == 0 ]
 then
     echo -e "\n\033[1;34m  ---------- pull cocker images composer ----------\033[0;0m\n"
     sudo docker pull composer/composer:1.1-php5
