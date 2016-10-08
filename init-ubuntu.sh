@@ -62,14 +62,14 @@ function processed()
     then
         sudo mkdir /etc/${name}
     fi
-    sudo mv -f ./server.ini /etc/${name}/server.ini
+    sudo cp -f ./server.ini /etc/${name}/server.ini
 
     # Move script (run-server)
-    sudo mv -f ./run-server.sh /usr/bin/run-server
+    sudo cp -f ./run-server.sh /usr/bin/run-server
     sudo chmod a+x /usr/bin/run-server
 
     # Move library
-    sudo mv -f ./library.sh /usr/local/lib/${name}-library.sh
+    sudo cp -f ./library.sh /usr/local/lib/${name}-library.sh
 }
 
 # Begin install docker
