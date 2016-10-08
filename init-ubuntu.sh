@@ -19,34 +19,8 @@ sudo apt-get install -y lsb-core
 # Get version of operation system
 version=`sudo lsb_release -a | grep "Release" | awk -F " " '{print $2}'`
 
+# Load library
 source ./library.sh
-
-# Begin install docker-compose
-if [ -f /usr/bin/docker-compose ]
-then
-    echo -e "\n\033[1;34m ---------- install docker-composer-1.8.0 ----------\033[0;0m\n"
-    wget -c http://drycms.hk.ufileos.com/docker-compose-1.8.0 -O docker-compose
-    sudo mv docker-compose /usr/bin
-    sudo chmod a+x /usr/bin/docker-compose
-fi
-
-# Check system version
-if [ "`inarray 12.04 14.04 15.10 16.04 $version`" == "no" ]
-then
-    color 31 "Version $version is not recommend beyond them 12.04/14.04/15.01/16.04" "\n" "\n\a"
-    
-    echo -e "\033[1;34m ---------- install docker-1.11.2 ----------\033[0;0m\n"
-    wget -c http://drycms.hk.ufileos.com/docker-1.11.2.tgz -O docker.tgz
-    mkdir docker && tar -zxvf docker.tgz -C ./docker --strip-components 1
-    sudo mv docker/* /usr/bin
-    sudo rm -rf docker/
-    sudo rm docker.tgz
-
-    echo -e "\n\033[1;34m ---------- install aufs-tools ----------\033[0;0m\n"
-    sudo apt-get install -y aufs-tools
-
-    exit 2
-fi
 
 # Profile configure
 function configure()
@@ -75,10 +49,37 @@ function processed()
     sudo cp -f ./library.sh /usr/local/lib/${name}-library.sh
 }
 
+# Begin install docker-compose
+if [ ! -f /usr/bin/docker-compose ]
+then
+    echo -e "\n\033[1;34m ---------- install docker-composer-1.8.0 ----------\033[0;0m\n"
+    wget -c http://drycms.hk.ufileos.com/docker-compose-1.8.0 -O docker-compose
+    sudo mv docker-compose /usr/bin
+    sudo chmod a+x /usr/bin/docker-compose
+fi
+
+# Check system version
+if [ "`inarray 12.04 14.04 15.10 16.04 $version`" == "no" ]
+then
+    color 31 "Version $version is not recommend beyond them 12.04/14.04/15.01/16.04" "\n" "\n\a"
+    
+    echo -e "\033[1;34m ---------- install docker-1.11.2 ----------\033[0;0m\n"
+    wget -c http://drycms.hk.ufileos.com/docker-1.11.2.tgz -O docker.tgz
+    mkdir docker && tar -zxvf docker.tgz -C ./docker --strip-components 1
+    sudo mv docker/* /usr/bin
+    sudo rm -rf docker/
+    sudo rm docker.tgz
+
+    echo -e "\n\033[1;34m ---------- install aufs-tools ----------\033[0;0m\n"
+    sudo apt-get install -y aufs-tools
+
+    exit 2
+fi
+
 # Begin install docker
 echo -e "\n\033[1;34m ---------- update apt-get source ----------\033[0;0m\n"
 
-if [ -f /etc/apt/sources.list.d/docker.list ]
+if [ ! -f /etc/apt/sources.list.d/docker.list ]
 then
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates
