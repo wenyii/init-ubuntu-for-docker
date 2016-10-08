@@ -22,10 +22,13 @@ version=`sudo lsb_release -a | grep "Release" | awk -F " " '{print $2}'`
 source ./library.sh
 
 # Begin install docker-compose
-echo -e "\n\033[1;34m ---------- install docker-composer-1.8.0 ----------\033[0;0m\n"
-wget -c http://drycms.hk.ufileos.com/docker-compose-1.8.0 -O docker-compose
-sudo mv docker-compose /usr/bin
-sudo chmod a+x /usr/bin/docker-compose
+if [ -f /usr/bin/docker-compose ]
+then
+    echo -e "\n\033[1;34m ---------- install docker-composer-1.8.0 ----------\033[0;0m\n"
+    wget -c http://drycms.hk.ufileos.com/docker-compose-1.8.0 -O docker-compose
+    sudo mv docker-compose /usr/bin
+    sudo chmod a+x /usr/bin/docker-compose
+fi
 
 # Check system version
 if [ "`inarray 12.04 14.04 15.10 16.04 $version`" == "no" ]
