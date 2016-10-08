@@ -61,9 +61,9 @@ then
     source ~/.bashrc
 fi
 
-if [ "`echo $PWD | awk -F "/" '{print $NF}'`" == "init-ubuntu-for-docker" ]
-then
-    # sudo rm -rf `pwd`
-fi
+# if [ "`echo $PWD | awk -F "/" '{print $NF}'`" == "init-ubuntu-for-docker" ]
+# then
+#     sudo rm -rf `pwd`
+# fi
 
 # -- eof --
