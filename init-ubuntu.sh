@@ -17,7 +17,7 @@ echo -e "\n\033[1;34m ---------- install lsb-core ----------\033[0;0m\n"
 sudo apt-get install -y lsb-core
 
 # Get version of operation system
-version=`sudo lsb_release -a | grep "Release" | awk -F " " '{print $2}'`
+version=`sudo lsb_release -a > /dev/null 2>&1 | grep "Release" | awk -F " " '{print $2}'`
 
 # Load library
 source ./library.sh
